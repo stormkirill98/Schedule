@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
@@ -15,20 +16,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using DatabaseUtils;
+using Database;
 
 namespace Schedule
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class EditingWindow : Window
     {
+        private ObservableCollection<StudyGroup> StudyGroupList { get; set; }
+
         public EditingWindow()
         {
+            StudyGroupList = new ObservableCollection<StudyGroup>(Utils.readStudyGroups());
+
             InitializeComponent();
 
-            DatabaseUtils.Class1.print();
+            studyGroupComboBox.ItemsSource = StudyGroupList;
         }
     }
 }

@@ -114,9 +114,9 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DatabaseUtils\DatabaseUtils.csproj">
+    <ProjectReference Include="..\DatabaseUtils\Database.csproj">
       <Project>{0e8244fd-d189-4965-a6af-3636160c1051}</Project>
-      <Name>DatabaseUtils</Name>
+      <Name>Database</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
