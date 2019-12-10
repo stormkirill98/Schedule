@@ -15,14 +15,20 @@ using System.Windows.Shapes;
 
 namespace Schedule
 {
-    /// <summary>
-    /// Логика взаимодействия для DaySchedule.xaml
-    /// </summary>
     public partial class DaySchedule : UserControl
     {
+        public static readonly DependencyProperty DayProperty = DependencyProperty.Register("Day", typeof(string), typeof(DaySchedule));
+        public string Day
+        {
+            get { return (string)GetValue(DayProperty); }
+            set { SetValue(DayProperty, value); }
+        }
+
         public DaySchedule()
         {
             InitializeComponent();
+
+            DataContext = this;
         }
     }
 }

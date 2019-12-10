@@ -13,12 +13,12 @@
                  Margin="115,10,0,0" VerticalAlignment="Top" Width="100" 
                  ItemsSource="{Binding StudyGroupList}" DisplayMemberPath="Name" SelectionChanged="StudyGroupComboBox_SelectionChanged"/>
         <CheckBox x:Name="parity" Content="Четная неделя" HorizontalAlignment="Left" Margin="220,16,0,0" VerticalAlignment="Top" Checked="Parity_Checked" Unchecked="Parity_Unchecked"/>
-        <local:DaySchedule HorizontalAlignment="Left" Height="380" Margin="10,40,0,0" VerticalAlignment="Top" Width="245"/>
-        <local:DaySchedule HorizontalAlignment="Left" Height="380" Margin="255,40,0,0" VerticalAlignment="Top" Width="245"/>
-        <local:DaySchedule HorizontalAlignment="Left" Height="380" Margin="500,40,0,0" VerticalAlignment="Top" Width="245"/>
-        <local:DaySchedule HorizontalAlignment="Left" Height="380" Margin="745,40,0,0" VerticalAlignment="Top" Width="245"/>
-        <local:DaySchedule HorizontalAlignment="Left" Height="380" Margin="990,40,0,0" VerticalAlignment="Top" Width="245"/>
-        <local:DaySchedule HorizontalAlignment="Left" Height="380" Margin="1235,40,0,0" VerticalAlignment="Top" Width="245"/>
+        <local:DaySchedule HorizontalAlignment="Left" Height="380" Margin="10,40,0,0" VerticalAlignment="Top" Width="245" Day="Понедельник"/>
+        <local:DaySchedule HorizontalAlignment="Left" Height="380" Margin="255,40,0,0" VerticalAlignment="Top" Width="245" Day="Вторник"/>
+        <local:DaySchedule HorizontalAlignment="Left" Height="380" Margin="500,40,0,0" VerticalAlignment="Top" Width="245" Day="Среда"/>
+        <local:DaySchedule HorizontalAlignment="Left" Height="380" Margin="745,40,0,0" VerticalAlignment="Top" Width="245" Day="Четверг"/>
+        <local:DaySchedule HorizontalAlignment="Left" Height="380" Margin="990,40,0,0" VerticalAlignment="Top" Width="245" Day="Пятница"/>
+        <local:DaySchedule HorizontalAlignment="Left" Height="380" Margin="1235,40,0,0" VerticalAlignment="Top" Width="245" Day="Суббота"/>
         <GridSplitter HorizontalAlignment="Left" Height="380" Margin="255,38,0,0" VerticalAlignment="Top" Width="1" Background="#FFA0A0A0"/>
         <GridSplitter HorizontalAlignment="Left" Height="380" Margin="499,38,0,0" VerticalAlignment="Top" Width="1" Background="#FFA0A0A0"/>
         <GridSplitter HorizontalAlignment="Left" Height="380" Margin="745,38,0,0" VerticalAlignment="Top" Width="1" Background="#FFA0A0A0"/>

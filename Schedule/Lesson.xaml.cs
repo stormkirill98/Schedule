@@ -28,19 +28,14 @@ namespace Schedule
         {
             InitializeComponent();
 
-            Number = 5;
-        }
-
-        private void Edit_Click(object sender, RoutedEventArgs e)
-        {
-
+            DataContext = this;
         }
 
         private void EmptyCheckbox_Click(object sender, RoutedEventArgs e)
         {
-            bool isEmpty = EmptyCheckbox.IsChecked == null ? false : (bool)EmptyCheckbox.IsChecked;
+            bool isNotEmpty = EmptyCheckbox.IsChecked == null ? false : (bool)EmptyCheckbox.IsChecked;
 
-            Visibility visibility = isEmpty ? Visibility.Visible : Visibility.Hidden;
+            Visibility visibility = isNotEmpty ? Visibility.Visible : Visibility.Hidden;
 
             DisciplineInput.Visibility = visibility;
             DisciplineTypeInput.Visibility = visibility;
