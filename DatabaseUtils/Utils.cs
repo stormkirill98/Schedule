@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.OleDb;
 using System.Linq;
@@ -25,6 +26,62 @@ namespace Database
             }
 
             return studyGroupList;
+        }
+
+        public static List<Discipline> readDisciplines()
+        {
+            List<Discipline> disciplineList = new List<Discipline>();
+
+            DataRowCollection rows = readTable("Discipline");
+
+            foreach (DataRow row in rows)
+            {
+                disciplineList.Add(new Discipline(row));
+            }
+
+            return disciplineList;
+        }
+
+        public static List<DisciplineType> readDisciplineTypes()
+        {
+            List<DisciplineType> disciplineTypeList = new List<DisciplineType>();
+
+            DataRowCollection rows = readTable("DisciplineType");
+
+            foreach (DataRow row in rows)
+            {
+                disciplineTypeList.Add(new DisciplineType(row));
+            }
+
+            return disciplineTypeList;
+        }
+
+        public static List<Cabinet> readCabinets()
+        {
+            List<Cabinet> cabinetList = new List<Cabinet>();
+
+            DataRowCollection rows = readTable("Cabinet");
+
+            foreach (DataRow row in rows)
+            {
+                cabinetList.Add(new Cabinet(row));
+            }
+
+            return cabinetList;
+        }
+
+        public static List<Teacher> readTeachers()
+        {
+            List<Teacher> teacherList = new List<Teacher>();
+
+            DataRowCollection rows = readTable("Teacher");
+
+            foreach (DataRow row in rows)
+            {
+                teacherList.Add(new Teacher(row));
+            }
+
+            return teacherList;
         }
 
         private static DataRowCollection readTable(string tableName)

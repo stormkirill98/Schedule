@@ -1,14 +1,21 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 
 namespace Database
 {
-    public struct DayOfWeek
+    public interface HasId
+    {
+        int Id { get; }
+    }
+
+    public struct DayOfWeek : HasId
     {
         public int Id { get; }
         public string Day { get; }
         public string Abbreviation { get; }
 
-        public DayOfWeek (DataRow row)
+        public DayOfWeek(DataRow row)
         {
             Id = (int)row["Key"];
             Day = (string)row["DayOfWeek"];
@@ -16,7 +23,7 @@ namespace Database
         }
     }
 
-    public struct StudyGroup
+    public struct StudyGroup : HasId
     {
         public int Id { get; }
         public string Name { get; }
@@ -28,22 +35,19 @@ namespace Database
         }
     }
 
-    public struct Discipline
+    public struct Discipline : HasId
     {
         public int Id { get; }
         public string Name { get; set; }
-        public int TeacherId { get; set; }
 
         public Discipline(DataRow row)
         {
             Id = (int)row["Key"];
             Name = (string)row["Discipline"];
-            TeacherId = (int)row["TeacherId"];
-
         }
     }
 
-    public struct DisciplineType
+    public struct DisciplineType : HasId
     {
         public int Id { get; }
         public string Type { get; }
@@ -55,7 +59,7 @@ namespace Database
         }
     }
 
-    public struct Parity
+    public struct Parity : HasId
     {
         public int Id { get; }
         public string Week { get; }
@@ -67,13 +71,15 @@ namespace Database
         }
     }
 
-    public struct Teacher
+    public struct Teacher : HasId
     {
         public int Id { get; }
         public string FirstName { get; set; }
         public string Patronymic { get; set; }
         public string LastName { get; set; }
         public string Cathedra { get; set; }
+
+        public string FullName { get; set; }
 
         public Teacher(DataRow row)
         {
@@ -82,10 +88,12 @@ namespace Database
             Patronymic = (string)row["Patronymic"];
             LastName = (string)row["LastName"];
             Cathedra = (string)row["Cathedra"];
+
+            FullName = string.Format("{0} {1} {2}", LastName, Patronymic, FirstName);
         }
     }
 
-    public struct Cabinet
+    public struct Cabinet : HasId
     {
         public int Id { get; }
         public int Floor { get; set; }
@@ -99,7 +107,7 @@ namespace Database
         }
     }
 
-    public struct Lesson
+    public struct Lesson : HasId
     {
         public int Id { get; }
         public int Number { get; set; }

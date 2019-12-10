@@ -22,38 +22,69 @@ namespace Schedule
 {
     public partial class EditingWindow : Window
     {
-        private List<StudyGroup> StudyGroupList;
+        private ObservableCollection<StudyGroup> StudyGroupList;
 
         public EditingWindow()
         {
-            StudyGroupList = Utils.readStudyGroups();
-
             InitializeComponent();
 
+            // TODO when is better
+            Init();
+
             StudyGroupComboBox.ItemsSource = StudyGroupList;
+            StudyGroupComboBox.DisplayMemberPath = "Name";
+        }
+
+        private void Init()
+        {
+            StudyGroupList = new ObservableCollection<StudyGroup>(Utils.readStudyGroups());
+
+            List<Discipline> disciplines = Utils.readDisciplines();
+            List<DisciplineType> disciplineTypes = Utils.readDisciplineTypes();
+            List<Cabinet> cabinets = Utils.readCabinets();
+            List<Teacher> teachers = Utils.readTeachers();
+
+            MondaySchedule.Init(disciplines, disciplineTypes, cabinets, teachers);
+            TuesdaySchedule.Init(disciplines, disciplineTypes, cabinets, teachers);
+            WednesdaySchedule.Init(disciplines, disciplineTypes, cabinets, teachers);
+            ThursdaySchedule.Init(disciplines, disciplineTypes, cabinets, teachers);
+            FridaySchedule.Init(disciplines, disciplineTypes, cabinets, teachers);
+            SutardaySchedule.Init(disciplines, disciplineTypes, cabinets, teachers);
         }
 
         private void StudyGroupComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            bool isParity = parity.IsChecked == null ? false : (bool) parity.IsChecked;
-            getWeekSchedule((StudyGroup)StudyGroupComboBox.SelectedItem, isParity);
+            getWeekSchedule();
         }
 
-        private void Parity_Checked(object sender, RoutedEventArgs e)
+        private void Parity_Click(object sender, RoutedEventArgs e)
         {
-            getWeekSchedule((StudyGroup)StudyGroupComboBox.SelectedItem, true);
-
+            getWeekSchedule();
         }
 
-        private void Parity_Unchecked(object sender, RoutedEventArgs e)
+        private void getWeekSchedule()
         {
-            getWeekSchedule((StudyGroup)StudyGroupComboBox.SelectedItem, false);
+            if (StudyGroupComboBox.SelectedItem == null)
+                return;
+
+            StudyGroup studyGroup = (StudyGroup)StudyGroupComboBox.SelectedItem;
+            bool isParity = ParityInput.IsChecked == null ? false : (bool)ParityInput.IsChecked;
+            Console.WriteLine(studyGroup.Name + " " + isParity);
         }
 
-        private void getWeekSchedule(StudyGroup studyGroup, bool parity)
+        private void Save_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine(studyGroup.Name + " " + parity);
+
         }
 
+        private void AddTeacher_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddStudyGroup_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

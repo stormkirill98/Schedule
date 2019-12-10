@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,16 @@ namespace Schedule
             InitializeComponent();
 
             DataContext = this;
+        }
+
+        public void Init(List<Discipline> disciplines, List<DisciplineType> disciplineTypes,
+                 List<Cabinet> cabinets, List<Teacher> teachers)
+        {
+            FirstLesson.Init(disciplines, disciplineTypes, cabinets, teachers);
+            SecondLesson.Init(disciplines, disciplineTypes, cabinets, teachers);
+            ThirdLesson.Init(disciplines, disciplineTypes, cabinets, teachers);
+            FourthLesson.Init(disciplines, disciplineTypes, cabinets, teachers);
+            FifthLesson.Init(disciplines, disciplineTypes, cabinets, teachers);
         }
     }
 }
