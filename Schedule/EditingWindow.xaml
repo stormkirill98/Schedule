@@ -6,12 +6,23 @@
         xmlns:local="clr-namespace:Schedule"
         xmlns:Database="clr-namespace:Database;assembly=DatabaseUtils" x:Class="Schedule.EditingWindow"
         mc:Ignorable="d"
-        Title="Editing Window" Height="417.639" Width="941.104">
-    <Grid VerticalAlignment="Top" Height="381">
+        Title="Editing Window" Height="460" Width="1500">
+    <Grid VerticalAlignment="Top" Height="430">
         <Label Content="Учебная группа" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25" Width="100"/>
         <ComboBox x:Name="StudyGroupComboBox" HorizontalAlignment="Left" Height="25" 
                  Margin="115,10,0,0" VerticalAlignment="Top" Width="100" 
                  ItemsSource="{Binding StudyGroupList}" DisplayMemberPath="Name" SelectionChanged="StudyGroupComboBox_SelectionChanged"/>
         <CheckBox x:Name="parity" Content="Четная неделя" HorizontalAlignment="Left" Margin="220,16,0,0" VerticalAlignment="Top" Checked="Parity_Checked" Unchecked="Parity_Unchecked"/>
+        <local:DaySchedule HorizontalAlignment="Left" Height="380" Margin="10,40,0,0" VerticalAlignment="Top" Width="245"/>
+        <local:DaySchedule HorizontalAlignment="Left" Height="380" Margin="255,40,0,0" VerticalAlignment="Top" Width="245"/>
+        <local:DaySchedule HorizontalAlignment="Left" Height="380" Margin="500,40,0,0" VerticalAlignment="Top" Width="245"/>
+        <local:DaySchedule HorizontalAlignment="Left" Height="380" Margin="745,40,0,0" VerticalAlignment="Top" Width="245"/>
+        <local:DaySchedule HorizontalAlignment="Left" Height="380" Margin="990,40,0,0" VerticalAlignment="Top" Width="245"/>
+        <local:DaySchedule HorizontalAlignment="Left" Height="380" Margin="1235,40,0,0" VerticalAlignment="Top" Width="245"/>
+        <GridSplitter HorizontalAlignment="Left" Height="380" Margin="255,38,0,0" VerticalAlignment="Top" Width="1" Background="#FFA0A0A0"/>
+        <GridSplitter HorizontalAlignment="Left" Height="380" Margin="499,38,0,0" VerticalAlignment="Top" Width="1" Background="#FFA0A0A0"/>
+        <GridSplitter HorizontalAlignment="Left" Height="380" Margin="745,38,0,0" VerticalAlignment="Top" Width="1" Background="#FFA0A0A0"/>
+        <GridSplitter HorizontalAlignment="Left" Height="380" Margin="989,38,0,0" VerticalAlignment="Top" Width="1" Background="#FFA0A0A0"/>
+        <GridSplitter HorizontalAlignment="Left" Height="380" Margin="1234,38,0,0" VerticalAlignment="Top" Width="1" Background="#FFA0A0A0"/>
     </Grid>
 </Window>
