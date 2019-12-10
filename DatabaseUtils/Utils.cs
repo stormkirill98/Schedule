@@ -13,16 +13,6 @@ namespace Database
         private static string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Projects\Visual Studio\Schedule\ScheduleBD.accdb";
         private static OleDbConnection thisConnection = new OleDbConnection(connectionString);
 
-        public static void readScheduleTable()
-        {
-            OleDbDataAdapter thisAdapter = new OleDbDataAdapter("SELECT * FROM Schedule", thisConnection);
-
-            DataSet thisDataSet = new DataSet();
-            thisAdapter.Fill(thisDataSet, "Schedule");
-
-            DataRowCollection rows = thisDataSet.Tables["Schedule"].Rows;
-        }
-
         public static List<StudyGroup> readStudyGroups()
         {
             List<StudyGroup> studyGroupList = new List<StudyGroup>();

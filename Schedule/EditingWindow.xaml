@@ -9,8 +9,9 @@
         Title="Editing Window" Height="417.639" Width="941.104">
     <Grid VerticalAlignment="Top" Height="381">
         <Label Content="Учебная группа" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25" Width="100"/>
-        <ComboBox x:Name="studyGroupComboBox" HorizontalAlignment="Left" Height="25" 
-                 Margin="115,10,0,0" VerticalAlignment="Top" Width="230" 
-                 ItemsSource="{Binding StudyGroupList}" DisplayMemberPath="Name"/>
+        <ComboBox x:Name="StudyGroupComboBox" HorizontalAlignment="Left" Height="25" 
+                 Margin="115,10,0,0" VerticalAlignment="Top" Width="100" 
+                 ItemsSource="{Binding StudyGroupList}" DisplayMemberPath="Name" SelectionChanged="StudyGroupComboBox_SelectionChanged"/>
+        <CheckBox x:Name="parity" Content="Четная неделя" HorizontalAlignment="Left" Margin="220,16,0,0" VerticalAlignment="Top" Checked="Parity_Checked" Unchecked="Parity_Unchecked"/>
     </Grid>
 </Window>

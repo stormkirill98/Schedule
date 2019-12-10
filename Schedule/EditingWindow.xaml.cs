@@ -22,15 +22,38 @@ namespace Schedule
 {
     public partial class EditingWindow : Window
     {
-        private ObservableCollection<StudyGroup> StudyGroupList { get; set; }
+        private List<StudyGroup> StudyGroupList;
 
         public EditingWindow()
         {
-            StudyGroupList = new ObservableCollection<StudyGroup>(Utils.readStudyGroups());
+            StudyGroupList = Utils.readStudyGroups();
 
             InitializeComponent();
 
-            studyGroupComboBox.ItemsSource = StudyGroupList;
+            StudyGroupComboBox.ItemsSource = StudyGroupList;
         }
+
+        private void StudyGroupComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            bool isParity = parity.IsChecked == null ? false : (bool) parity.IsChecked;
+            getWeekSchedule((StudyGroup)StudyGroupComboBox.SelectedItem, isParity);
+        }
+
+        private void Parity_Checked(object sender, RoutedEventArgs e)
+        {
+            getWeekSchedule((StudyGroup)StudyGroupComboBox.SelectedItem, true);
+
+        }
+
+        private void Parity_Unchecked(object sender, RoutedEventArgs e)
+        {
+            getWeekSchedule((StudyGroup)StudyGroupComboBox.SelectedItem, false);
+        }
+
+        private void getWeekSchedule(StudyGroup studyGroup, bool parity)
+        {
+            Console.WriteLine(studyGroup.Name + " " + parity);
+        }
+
     }
 }
