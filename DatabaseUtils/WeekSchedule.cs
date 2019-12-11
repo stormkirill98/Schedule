@@ -15,6 +15,11 @@ namespace Database
         public WeekSchedule()
         {
             DaySchedules = new List<DaySchedule>(6);
+
+            for (int i = 0; i < 6; i++)
+            {
+                DaySchedules.Add(new DaySchedule());
+            }
         }
 
         public WeekSchedule(StudyGroup studyGroup, Parity parity) : this()

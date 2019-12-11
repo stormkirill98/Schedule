@@ -68,8 +68,16 @@ namespace Schedule
                 return;
 
             StudyGroup studyGroup = (StudyGroup)StudyGroupComboBox.SelectedItem;
-            bool isParity = ParityInput.IsChecked == null ? false : (bool)ParityInput.IsChecked;
-            Console.WriteLine(studyGroup.Name + " " + isParity);
+            Parity parity = GetParity();
+
+            WeekSchedule weekSchedule = Utils.readSchedule(studyGroup, parity);
+
+            MondaySchedule.Fill(weekSchedule.DaySchedules[0]);
+            TuesdaySchedule.Fill(weekSchedule.DaySchedules[1]);
+            WednesdaySchedule.Fill(weekSchedule.DaySchedules[2]);
+            ThursdaySchedule.Fill(weekSchedule.DaySchedules[3]);
+            FridaySchedule.Fill(weekSchedule.DaySchedules[4]);
+            SutardaySchedule.Fill(weekSchedule.DaySchedules[5]);
         }
 
         private WeekSchedule GetWeekSchedule()
@@ -78,9 +86,8 @@ namespace Schedule
                 return null;
 
             StudyGroup studyGroup = (StudyGroup)StudyGroupComboBox.SelectedItem;
+            Parity parity = GetParity();
 
-            bool isParity = ParityInput.IsChecked == null ? false : (bool)ParityInput.IsChecked;
-            Parity parity = isParity ? new Parity(1, "Числитель") : new Parity(2, "Знаменатель");
 
             WeekSchedule weekSchedule = new WeekSchedule(studyGroup, parity);
 
@@ -111,6 +118,12 @@ namespace Schedule
         private void AddStudyGroup_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private Parity GetParity()
+        {
+            bool isParity = ParityInput.IsChecked == null ? false : (bool)ParityInput.IsChecked;
+            return isParity ? new Parity(1, "Числитель") : new Parity(2, "Знаменатель");
         }
     }
 }

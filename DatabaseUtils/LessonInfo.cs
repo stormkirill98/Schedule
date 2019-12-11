@@ -16,6 +16,8 @@ namespace Database
         public Teacher Teacher { get; set; }
         public StudyGroup StudyGroup { get; set; }
 
+        public LessonInfo() { }
+
         public LessonInfo(Discipline discipline, DisciplineType disciplineType,
             Cabinet cabinet, Teacher teacher, 
             Lesson lesson = new Lesson(),

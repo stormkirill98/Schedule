@@ -13,6 +13,11 @@ namespace Database
         public DaySchedule()
         {
             Lessons = new List<LessonInfo>(5);
+
+            for (int i = 0; i < 5; i++)
+            {
+                Lessons.Add(new LessonInfo());
+            }
         }
 
         public void AddLesson(LessonInfo lessonInfo) {

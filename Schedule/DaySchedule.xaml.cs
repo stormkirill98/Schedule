@@ -42,6 +42,15 @@ namespace Schedule
             FifthLesson.Init(disciplines, disciplineTypes, cabinets, teachers);
         }
 
+        public void Fill(Database.DaySchedule daySchedule)
+        {
+            FirstLesson.Fill(daySchedule.Lessons[0]);
+            SecondLesson.Fill(daySchedule.Lessons[1]);
+            ThirdLesson.Fill(daySchedule.Lessons[2]);
+            FourthLesson.Fill(daySchedule.Lessons[3]);
+            FifthLesson.Fill(daySchedule.Lessons[4]);
+        }
+
         public Database.DaySchedule GetDaySchedule()
         {
             Database.DaySchedule daySchedule = new Database.DaySchedule();

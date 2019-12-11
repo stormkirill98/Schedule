@@ -13,7 +13,7 @@ namespace Database
     public class Utils
     {
         private static string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Projects\Visual Studio\Schedule\ScheduleBD.accdb";
-        private static OleDbConnection thisConnection = new OleDbConnection(connectionString);
+        private static OleDbConnection connection = new OleDbConnection(connectionString);
 
         public static List<StudyGroup> readStudyGroups()
         {
@@ -85,14 +85,112 @@ namespace Database
             return teacherList;
         }
 
+
         private static DataRowCollection readTable(string tableName)
         {
-            OleDbDataAdapter thisAdapter = new OleDbDataAdapter(string.Format("SELECT * FROM {0}", tableName), thisConnection);
+            OleDbDataAdapter adapter = new OleDbDataAdapter(string.Format("SELECT * FROM {0}", tableName), connection);
 
-            DataSet thisDataSet = new DataSet();
-            thisAdapter.Fill(thisDataSet, tableName);
+            DataSet dataSet = new DataSet();
+            adapter.Fill(dataSet, tableName);
 
-            return thisDataSet.Tables[tableName].Rows;
+            return dataSet.Tables[tableName].Rows;
+        }
+
+        public static WeekSchedule readSchedule(StudyGroup studyGroup, Parity parity)
+        {
+            WeekSchedule weekSchedule = new WeekSchedule(studyGroup, parity);
+
+            OleDbDataAdapter adapter = new OleDbDataAdapter(string.Format("SELECT * FROM Schedule WHERE StudyGroupID = {0} AND ParityID = {1}", studyGroup.Id, parity.Id), connection);
+
+            DataSet dataSet = new DataSet();
+            adapter.Fill(dataSet, "Schedule");
+
+            DataRowCollection rows = dataSet.Tables["Schedule"].Rows;
+
+            foreach (DataRow row in rows)
+            {
+                DayOfWeek dayOfWeek = GetDayOfWeekById((int)row["DayOfWeekID"]);
+                Lesson lesson= GetLessonById((int)row["LessonID"]);
+
+                Discipline discipline = GetDisciplineById((int)row["DisciplineID"]);
+                DisciplineType disciplineType = GetDisciplineTypeById((int)row["DisciplineTypeID"]);
+                Cabinet cabinet = GetCabinetById((int)row["CabinetID"]);
+                Teacher teacher = GetTeacherById((int)row["TeacherId"]);
+
+                LessonInfo lessonInfo = new LessonInfo((int)row["ScheduleID"], lesson, discipline, disciplineType, cabinet, teacher, studyGroup);
+
+                weekSchedule.DaySchedules[dayOfWeek.Id - 1].Lessons[lesson.Number - 1] = lessonInfo;
+            }
+
+            return weekSchedule;
+        }
+
+        private static StudyGroup GetStudyGroupById(int id)
+        {
+            DataRow row = GetById("StudyGroup", id);
+
+            return new StudyGroup(row);
+        }
+
+        private static Discipline GetDisciplineById(int id)
+        {
+            DataRow row = GetById("Discipline", id);
+
+            return new Discipline(row);
+        }
+
+        private static DisciplineType GetDisciplineTypeById(int id)
+        {
+            DataRow row = GetById("DisciplineType", id);
+
+            return new DisciplineType(row);
+        }
+
+        private static Cabinet GetCabinetById(int id)
+        {
+            DataRow row = GetById("Cabinet", id);
+
+            return new Cabinet(row);
+        }
+
+        private static Teacher GetTeacherById(int id)
+        {
+            DataRow row = GetById("Teacher", id);
+
+            return new Teacher(row);
+        }
+
+        private static DayOfWeek GetDayOfWeekById(int id)
+        {
+            DataRow row = GetById("DayOfWeek", id);
+
+            return new DayOfWeek(row);
+        }
+
+        private static Parity GetParityById(int id)
+        {
+            DataRow row = GetById("Parity", id);
+
+            return new Parity(row);
+        }
+
+        private static Lesson GetLessonById(int id)
+        {
+            DataRow row = GetById("Lesson", id);
+
+            return new Lesson(row);
+        }
+
+        private static DataRow GetById(string tableName, int id)
+        {
+            OleDbDataAdapter adapter = new OleDbDataAdapter(string.Format("SELECT * FROM {0} WHERE Key = {1}", tableName, id), connection);
+
+            DataSet dataSet = new DataSet();
+            adapter.Fill(dataSet, tableName);
+
+            DataRowCollection rows = dataSet.Tables[tableName].Rows;
+
+            return rows.Count == 0 ? null : rows[0];
         }
 
         public static void SaveWeekSchedule(WeekSchedule weekSchedule)
@@ -114,10 +212,10 @@ namespace Database
         }
 
         private static void InsertScheduleRow(int dayOfWeekId, int parityId, 
-            int lessonId, int studyGroupId, int disciplineId, 
-            int disciplineTypeId, int cabinetId, int teacherId)
+                                            int lessonId, int studyGroupId, int disciplineId, 
+                                            int disciplineTypeId, int cabinetId, int teacherId)
         {
-            OleDbDataAdapter adapter = new OleDbDataAdapter("SELECT * FROM Schedule", thisConnection);
+            OleDbDataAdapter adapter = new OleDbDataAdapter("SELECT * FROM Schedule", connection);
             OleDbCommandBuilder builder = new OleDbCommandBuilder(adapter);
 
             DataSet dataSet = new DataSet();
@@ -125,7 +223,6 @@ namespace Database
 
             DataRow newRow = dataSet.Tables["Schedule"].NewRow();
 
-            newRow["ScheduleID"] = 3;
             newRow["DayOfWeekID"] = dayOfWeekId;
             newRow["ParityID"] = parityId;
             newRow["LessonID"] = lessonId;

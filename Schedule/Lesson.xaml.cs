@@ -31,6 +31,8 @@ namespace Schedule
         public ObservableCollection<Cabinet> CabinetList = new ObservableCollection<Cabinet>() { new Cabinet() };
         public ObservableCollection<Teacher> TeacherList = new ObservableCollection<Teacher>() { new Teacher() };
 
+        private LessonInfo currentLessonInfo = null;
+
         public Lesson()
         {
             InitializeComponent();
@@ -39,15 +41,19 @@ namespace Schedule
 
             DisciplineInput.ItemsSource = DisciplineList;
             DisciplineInput.DisplayMemberPath = "Name";
+            DisciplineInput.SelectedValuePath = "Id";
 
             DisciplineTypeInput.ItemsSource = DisciplineTypeList;
             DisciplineTypeInput.DisplayMemberPath = "Type";
+            DisciplineTypeInput.SelectedValuePath = "Id";
 
             CabinetInput.ItemsSource = CabinetList;
             CabinetInput.DisplayMemberPath = "Number";
+            CabinetInput.SelectedValuePath = "Id";
 
             TeacherInput.ItemsSource = TeacherList;
             TeacherInput.DisplayMemberPath = "FullName";
+            TeacherInput.SelectedValuePath = "Id";
         }
 
         public void Init(List<Discipline> disciplines, List<DisciplineType> disciplineTypes,
@@ -61,10 +67,30 @@ namespace Schedule
 
         public void Fill(LessonInfo lessonInfo)
         {
-            if (lessonInfo.Lesson.Number != Number)
+            if (lessonInfo.Lesson.Number == 0)
+            {
+                Clear();
                 return;
+            }
 
-            // TODO fill lesson
+            if (lessonInfo.Lesson.Number != Number)
+            {
+                return;
+            }
+
+
+            DisciplineInput.SelectedValue = lessonInfo.Discipline.Id;
+            DisciplineTypeInput.SelectedValue = lessonInfo.DisciplineType.Id;
+            CabinetInput.SelectedValue = lessonInfo.Cabinet.Id;
+            TeacherInput.SelectedValue = lessonInfo.Teacher.Id;
+        }
+
+        public void Clear()
+        {
+            DisciplineInput.SelectedValue = 0;
+            DisciplineTypeInput.SelectedValue = 0;
+            CabinetInput.SelectedValue = 0;
+            TeacherInput.SelectedValue = 0;
         }
 
         public LessonInfo GetLessonInfo()
