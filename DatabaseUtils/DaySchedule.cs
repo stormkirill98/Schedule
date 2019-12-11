@@ -20,10 +20,10 @@ namespace Database
             }
         }
 
-        public void AddLesson(LessonInfo lessonInfo) {
-            if (Lessons.Count == 5) return; 
+        public void SetLesson(int num, LessonInfo lessonInfo) {
+            if (num >= 5) return; 
 
-            Lessons.Add(lessonInfo);
+            Lessons[num] = lessonInfo;
         }
     }
 }

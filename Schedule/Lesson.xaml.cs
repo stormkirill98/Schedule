@@ -28,7 +28,7 @@ namespace Schedule
 
         public ObservableCollection<Discipline> DisciplineList = new ObservableCollection<Discipline>() { new Discipline() };
         public ObservableCollection<DisciplineType> DisciplineTypeList = new ObservableCollection<DisciplineType>() { new DisciplineType() };
-        public ObservableCollection<Cabinet> CabinetList = new ObservableCollection<Cabinet>() { new Cabinet() };
+        public ObservableCollection<Cabinet> CabinetList = new ObservableCollection<Cabinet>() { };
         public ObservableCollection<Teacher> TeacherList = new ObservableCollection<Teacher>() { new Teacher() };
 
         private LessonInfo currentLessonInfo = null;
@@ -41,19 +41,15 @@ namespace Schedule
 
             DisciplineInput.ItemsSource = DisciplineList;
             DisciplineInput.DisplayMemberPath = "Name";
-            DisciplineInput.SelectedValuePath = "Id";
 
             DisciplineTypeInput.ItemsSource = DisciplineTypeList;
             DisciplineTypeInput.DisplayMemberPath = "Type";
-            DisciplineTypeInput.SelectedValuePath = "Id";
 
             CabinetInput.ItemsSource = CabinetList;
             CabinetInput.DisplayMemberPath = "Number";
-            CabinetInput.SelectedValuePath = "Id";
 
             TeacherInput.ItemsSource = TeacherList;
             TeacherInput.DisplayMemberPath = "FullName";
-            TeacherInput.SelectedValuePath = "Id";
         }
 
         public void Init(List<Discipline> disciplines, List<DisciplineType> disciplineTypes,
@@ -67,29 +63,25 @@ namespace Schedule
 
         public void Fill(LessonInfo lessonInfo)
         {
-            if (lessonInfo.Lesson.Number == 0)
+            currentLessonInfo = lessonInfo;
+
+            if (lessonInfo.Lesson.Id == 0)
             {
                 Clear();
                 return;
             }
 
-            if (lessonInfo.Lesson.Number != Number)
-            {
-                return;
-            }
-
-
-            DisciplineInput.SelectedValue = lessonInfo.Discipline.Id;
-            DisciplineTypeInput.SelectedValue = lessonInfo.DisciplineType.Id;
-            CabinetInput.SelectedValue = lessonInfo.Cabinet.Id;
-            TeacherInput.SelectedValue = lessonInfo.Teacher.Id;
+            DisciplineInput.SelectedValue = lessonInfo.Discipline;
+            DisciplineTypeInput.SelectedValue = lessonInfo.DisciplineType;
+            CabinetInput.SelectedValue = lessonInfo.Cabinet;
+            TeacherInput.SelectedValue = lessonInfo.Teacher;
         }
 
         public void Clear()
         {
             DisciplineInput.SelectedValue = 0;
             DisciplineTypeInput.SelectedValue = 0;
-            CabinetInput.SelectedValue = 0;
+            CabinetInput.SelectedValue = -1;
             TeacherInput.SelectedValue = 0;
         }
 
@@ -120,7 +112,11 @@ namespace Schedule
                 return null;
             }
 
-            return new LessonInfo(disciplineValue, disciplineTypeValue, cabinetValue, teacherValue);
+            LessonInfo resulLessonInfo = currentLessonInfo == null 
+                ? new LessonInfo(disciplineValue, disciplineTypeValue, cabinetValue, teacherValue)
+                : new LessonInfo(currentLessonInfo.Id, disciplineValue, disciplineTypeValue, cabinetValue, teacherValue);
+
+            return resulLessonInfo;
         }
 
         private void EmptyCheckbox_Click(object sender, RoutedEventArgs e)

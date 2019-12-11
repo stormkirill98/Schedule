@@ -55,11 +55,11 @@ namespace Schedule
         {
             Database.DaySchedule daySchedule = new Database.DaySchedule();
 
-            daySchedule.AddLesson(FirstLesson.GetLessonInfo());
-            daySchedule.AddLesson(SecondLesson.GetLessonInfo());
-            daySchedule.AddLesson(ThirdLesson.GetLessonInfo());
-            daySchedule.AddLesson(FourthLesson.GetLessonInfo());
-            daySchedule.AddLesson(FifthLesson.GetLessonInfo());
+            daySchedule.SetLesson(0, FirstLesson.GetLessonInfo());
+            daySchedule.SetLesson(1, SecondLesson.GetLessonInfo());
+            daySchedule.SetLesson(2, ThirdLesson.GetLessonInfo());
+            daySchedule.SetLesson(3, FourthLesson.GetLessonInfo());
+            daySchedule.SetLesson(4, FifthLesson.GetLessonInfo());
 
             return daySchedule;
         }

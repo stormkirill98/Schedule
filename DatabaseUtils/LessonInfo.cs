@@ -23,8 +23,6 @@ namespace Database
             Lesson lesson = new Lesson(),
             StudyGroup studyGroup = new StudyGroup())
         {
-            Id = -1;
-
             Lesson = lesson;
             Discipline = discipline;
             DisciplineType = disciplineType;
@@ -33,8 +31,10 @@ namespace Database
             StudyGroup = studyGroup;
         }
 
-        public LessonInfo(int id, Lesson lesson, Discipline discipline, DisciplineType disciplineType, 
-            Cabinet cabinet, Teacher teacher, StudyGroup studyGroup)
+        public LessonInfo(int id, Discipline discipline, DisciplineType disciplineType, 
+            Cabinet cabinet, Teacher teacher, 
+            Lesson lesson = new Lesson(), 
+            StudyGroup studyGroup = new StudyGroup())
             : this (discipline, disciplineType, cabinet, teacher, lesson, studyGroup)
         {
             Id = id;

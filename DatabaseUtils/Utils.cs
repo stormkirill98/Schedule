@@ -110,14 +110,14 @@ namespace Database
             foreach (DataRow row in rows)
             {
                 DayOfWeek dayOfWeek = GetDayOfWeekById((int)row["DayOfWeekID"]);
-                Lesson lesson= GetLessonById((int)row["LessonID"]);
+                Lesson lesson = GetLessonById((int)row["LessonID"]);
 
                 Discipline discipline = GetDisciplineById((int)row["DisciplineID"]);
                 DisciplineType disciplineType = GetDisciplineTypeById((int)row["DisciplineTypeID"]);
                 Cabinet cabinet = GetCabinetById((int)row["CabinetID"]);
                 Teacher teacher = GetTeacherById((int)row["TeacherId"]);
 
-                LessonInfo lessonInfo = new LessonInfo((int)row["ScheduleID"], lesson, discipline, disciplineType, cabinet, teacher, studyGroup);
+                LessonInfo lessonInfo = new LessonInfo((int)row["ScheduleID"], discipline, disciplineType, cabinet, teacher, lesson, studyGroup);
 
                 weekSchedule.DaySchedules[dayOfWeek.Id - 1].Lessons[lesson.Number - 1] = lessonInfo;
             }
@@ -201,18 +201,25 @@ namespace Database
 
                 for (int lessonNumber = 0; lessonNumber < daySchedule.Lessons.Count; lessonNumber++)
                 {
-                    LessonInfo lesson = daySchedule.Lessons[lessonNumber];
-                    if (lesson == null) continue;
+                    LessonInfo lessonInfo = daySchedule.Lessons[lessonNumber];
+                    if (lessonInfo == null) continue;
 
-                    InsertScheduleRow(dayNumber + 1, weekSchedule.Parity.Id, lessonNumber + 1,
-                        weekSchedule.StudyGroup.Id, lesson.Discipline.Id, lesson.DisciplineType.Id,
-                        lesson.Cabinet.Id, lesson.Teacher.Id);
+                    if (lessonInfo.Id == 0)
+                    {
+                        InsertScheduleRow(dayNumber + 1, weekSchedule.Parity.Id, lessonNumber + 1,
+                                            weekSchedule.StudyGroup.Id, lessonInfo.Discipline.Id, lessonInfo.DisciplineType.Id,
+                                            lessonInfo.Cabinet.Id, lessonInfo.Teacher.Id);
+                    } else
+                    {
+                        UpdateScheduleRow(lessonInfo.Id, lessonInfo.Discipline.Id, lessonInfo.DisciplineType.Id,
+                                            lessonInfo.Cabinet.Id, lessonInfo.Teacher.Id);
+                    }
                 }
             }
         }
 
-        private static void InsertScheduleRow(int dayOfWeekId, int parityId, 
-                                            int lessonId, int studyGroupId, int disciplineId, 
+        private static void InsertScheduleRow(int dayOfWeekId, int parityId,
+                                            int lessonId, int studyGroupId, int disciplineId,
                                             int disciplineTypeId, int cabinetId, int teacherId)
         {
             OleDbDataAdapter adapter = new OleDbDataAdapter("SELECT * FROM Schedule", connection);
@@ -233,6 +240,29 @@ namespace Database
             newRow["TeacherId"] = teacherId;
 
             dataSet.Tables["Schedule"].Rows.Add(newRow);
+
+            builder.GetUpdateCommand();
+            adapter.Update(dataSet, "Schedule");
+        }
+
+        private static void UpdateScheduleRow(int scheduleId, int disciplineId,
+                                            int disciplineTypeId, int cabinetId, int teacherId)
+        {
+            OleDbDataAdapter adapter = new OleDbDataAdapter(string.Format("SELECT * FROM Schedule WHERE ScheduleID = {0}", scheduleId), connection);
+            OleDbCommandBuilder builder = new OleDbCommandBuilder(adapter);
+
+            DataSet dataSet = new DataSet();
+            adapter.Fill(dataSet, "Schedule");
+
+            DataRowCollection rows = dataSet.Tables["Schedule"].Rows;
+            if (rows.Count == 0) return;
+
+            DataRow row = rows[0];
+
+            row["DisciplineID"] = disciplineId;
+            row["DisciplineTypeID"] = disciplineTypeId;
+            row["CabinetID"] = cabinetId;
+            row["TeacherId"] = teacherId;
 
             builder.GetUpdateCommand();
             adapter.Update(dataSet, "Schedule");

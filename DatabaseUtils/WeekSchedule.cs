@@ -28,11 +28,11 @@ namespace Database
             Parity = parity;
         }
 
-        public void AddDaySchedule(DaySchedule daySchedule)
+        public void SetDaySchedule(int num, DaySchedule daySchedule)
         {
-            if (DaySchedules.Count == 6) return;
+            if (num >= 6) return;
 
-            DaySchedules.Add(daySchedule);
+            DaySchedules[num] = daySchedule;
         }
     }
 }

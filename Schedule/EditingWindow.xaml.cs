@@ -91,12 +91,12 @@ namespace Schedule
 
             WeekSchedule weekSchedule = new WeekSchedule(studyGroup, parity);
 
-            weekSchedule.AddDaySchedule(MondaySchedule.GetDaySchedule());
-            weekSchedule.AddDaySchedule(TuesdaySchedule.GetDaySchedule());
-            weekSchedule.AddDaySchedule(WednesdaySchedule.GetDaySchedule());
-            weekSchedule.AddDaySchedule(ThursdaySchedule.GetDaySchedule());
-            weekSchedule.AddDaySchedule(FridaySchedule.GetDaySchedule());
-            weekSchedule.AddDaySchedule(SutardaySchedule.GetDaySchedule());
+            weekSchedule.SetDaySchedule(0, MondaySchedule.GetDaySchedule());
+            weekSchedule.SetDaySchedule(1, TuesdaySchedule.GetDaySchedule());
+            weekSchedule.SetDaySchedule(2, WednesdaySchedule.GetDaySchedule());
+            weekSchedule.SetDaySchedule(3, ThursdaySchedule.GetDaySchedule());
+            weekSchedule.SetDaySchedule(4, FridaySchedule.GetDaySchedule());
+            weekSchedule.SetDaySchedule(5, SutardaySchedule.GetDaySchedule());
 
             return weekSchedule;
         }
