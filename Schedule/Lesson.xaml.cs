@@ -67,6 +67,36 @@ namespace Schedule
             // TODO fill lesson
         }
 
+        public LessonInfo GetLessonInfo()
+        {
+            if (DisciplineInput.SelectedValue == null 
+                || DisciplineTypeInput.SelectedValue == null 
+                || CabinetInput.SelectedValue == null 
+                || TeacherInput.SelectedValue == null)
+            {
+                return null;
+            }
+
+            Discipline disciplineValue = (Discipline)DisciplineInput.SelectedValue;
+            DisciplineType disciplineTypeValue = (DisciplineType)DisciplineTypeInput.SelectedValue;
+            Cabinet cabinetValue = (Cabinet)CabinetInput.SelectedValue;
+            Teacher teacherValue = (Teacher)TeacherInput.SelectedValue;
+
+            bool isNotEmpty = EmptyCheckbox.IsChecked == null ? false : (bool)EmptyCheckbox.IsChecked;
+
+            if (disciplineValue.Name == ""
+                || disciplineTypeValue.Type == ""
+                || cabinetValue.Number == 0
+                || teacherValue.FullName == "  "
+                || !isNotEmpty)
+            {
+                // TODO if one of all is empty then make all empty
+                return null;
+            }
+
+            return new LessonInfo(disciplineValue, disciplineTypeValue, cabinetValue, teacherValue);
+        }
+
         private void EmptyCheckbox_Click(object sender, RoutedEventArgs e)
         {
             bool isNotEmpty = EmptyCheckbox.IsChecked == null ? false : (bool)EmptyCheckbox.IsChecked;

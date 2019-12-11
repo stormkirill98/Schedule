@@ -41,5 +41,18 @@ namespace Schedule
             FourthLesson.Init(disciplines, disciplineTypes, cabinets, teachers);
             FifthLesson.Init(disciplines, disciplineTypes, cabinets, teachers);
         }
+
+        public Database.DaySchedule GetDaySchedule()
+        {
+            Database.DaySchedule daySchedule = new Database.DaySchedule();
+
+            daySchedule.AddLesson(FirstLesson.GetLessonInfo());
+            daySchedule.AddLesson(SecondLesson.GetLessonInfo());
+            daySchedule.AddLesson(ThirdLesson.GetLessonInfo());
+            daySchedule.AddLesson(FourthLesson.GetLessonInfo());
+            daySchedule.AddLesson(FifthLesson.GetLessonInfo());
+
+            return daySchedule;
+        }
     }
 }

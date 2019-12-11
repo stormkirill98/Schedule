@@ -69,6 +69,12 @@ namespace Database
             Id = (int)row["Key"];
             Week = (string)row["Week"];
         }
+
+        public Parity(int id, string week)
+        {
+            Id = id;
+            Week = week;
+        }
     }
 
     public struct Teacher : HasId
@@ -89,7 +95,7 @@ namespace Database
             LastName = (string)row["LastName"];
             Cathedra = (string)row["Cathedra"];
 
-            FullName = string.Format("{0} {1} {2}", LastName, Patronymic, FirstName);
+            FullName = string.Format("{0} {1} {2}", LastName, FirstName, Patronymic);
         }
     }
 

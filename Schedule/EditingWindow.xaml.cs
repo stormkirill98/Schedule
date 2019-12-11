@@ -54,15 +54,15 @@ namespace Schedule
 
         private void StudyGroupComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            getWeekSchedule();
+            FillWeekSchedule();
         }
 
         private void Parity_Click(object sender, RoutedEventArgs e)
         {
-            getWeekSchedule();
+            FillWeekSchedule();
         }
 
-        private void getWeekSchedule()
+        private void FillWeekSchedule()
         {
             if (StudyGroupComboBox.SelectedItem == null)
                 return;
@@ -72,9 +72,35 @@ namespace Schedule
             Console.WriteLine(studyGroup.Name + " " + isParity);
         }
 
+        private WeekSchedule GetWeekSchedule()
+        {
+            if (StudyGroupComboBox.SelectedItem == null)
+                return null;
+
+            StudyGroup studyGroup = (StudyGroup)StudyGroupComboBox.SelectedItem;
+
+            bool isParity = ParityInput.IsChecked == null ? false : (bool)ParityInput.IsChecked;
+            Parity parity = isParity ? new Parity(1, "Числитель") : new Parity(2, "Знаменатель");
+
+            WeekSchedule weekSchedule = new WeekSchedule(studyGroup, parity);
+
+            weekSchedule.AddDaySchedule(MondaySchedule.GetDaySchedule());
+            weekSchedule.AddDaySchedule(TuesdaySchedule.GetDaySchedule());
+            weekSchedule.AddDaySchedule(WednesdaySchedule.GetDaySchedule());
+            weekSchedule.AddDaySchedule(ThursdaySchedule.GetDaySchedule());
+            weekSchedule.AddDaySchedule(FridaySchedule.GetDaySchedule());
+            weekSchedule.AddDaySchedule(SutardaySchedule.GetDaySchedule());
+
+            return weekSchedule;
+        }
+
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            WeekSchedule weekSchedule = GetWeekSchedule();
+            if (weekSchedule == null)
+                return;
 
+            Utils.SaveWeekSchedule(weekSchedule);
         }
 
         private void AddTeacher_Click(object sender, RoutedEventArgs e)

@@ -9,15 +9,23 @@ namespace Database
     public class WeekSchedule
     {
         public List<DaySchedule> DaySchedules { get; }
+        public StudyGroup StudyGroup { get; }
+        public Parity Parity { get; }
 
         public WeekSchedule()
         {
-            DaySchedules = new List<DaySchedule>(7);
+            DaySchedules = new List<DaySchedule>(6);
+        }
+
+        public WeekSchedule(StudyGroup studyGroup, Parity parity) : this()
+        {
+            StudyGroup = studyGroup;
+            Parity = parity;
         }
 
         public void AddDaySchedule(DaySchedule daySchedule)
         {
-            if (DaySchedules.Count == 7) return;
+            if (DaySchedules.Count == 6) return;
 
             DaySchedules.Add(daySchedule);
         }
