@@ -267,5 +267,25 @@ namespace Database
             builder.GetUpdateCommand();
             adapter.Update(dataSet, "Schedule");
         }
+
+        private static void DeleteScheduleRow(int scheduleId)
+        {
+            OleDbDataAdapter adapter = new OleDbDataAdapter("SELECT * FROM Schedule", connection);
+            OleDbCommandBuilder builder = new OleDbCommandBuilder(adapter);
+
+            DataSet dataSet = new DataSet();
+            adapter.Fill(dataSet, "Schedule");
+
+            DataColumn[] keys = new DataColumn[1];
+            keys[0] = dataSet.Tables["Schedule"].Columns["ScheduleID"];
+            dataSet.Tables["Schedule"].PrimaryKey = keys;
+
+            DataRow findRow = dataSet.Tables["Customers"].Rows.Find(scheduleId);
+
+            if (findRow != null)
+            {
+                findRow.Delete();
+            }
+        }
     }
 }
