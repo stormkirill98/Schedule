@@ -58,6 +58,9 @@
     <Compile Include="DaySchedule.xaml.cs">
       <DependentUpon>DaySchedule.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DisciplineWindow.xaml.cs">
+      <DependentUpon>DisciplineWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Lesson.xaml.cs">
       <DependentUpon>Lesson.xaml</DependentUpon>
     </Compile>
@@ -66,7 +69,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ScheduleBDDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="StudyGroupWindow.xaml.cs">
+      <DependentUpon>StudyGroupWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherWindow.xaml.cs">
+      <DependentUpon>TeacherWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="DaySchedule.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DisciplineWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -83,6 +96,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Lesson.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StudyGroupWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TeacherWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

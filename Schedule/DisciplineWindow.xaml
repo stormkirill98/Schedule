@@ -1,0 +1,16 @@
+﻿<Window x:Class="Schedule.DisciplineWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Schedule"
+        mc:Ignorable="d"
+        Title="New Discipline" Height="130" Width="300">
+    <Grid>
+        <TextBox x:Name="DisciplineInput" HorizontalAlignment="Left" Height="30" Margin="20,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" VerticalContentAlignment="Center" FontSize="14" MaxLines="1" IsUndoEnabled="False"/>
+        <Label Content="Discipline Name" HorizontalAlignment="Left" Margin="20,5,0,0" VerticalAlignment="Top" Width="118"/>
+        <Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="222,69,0,0" VerticalAlignment="Top" Width="60 " Click="Cancel_Click"/>
+        <Button x:Name="Add" Content="Add" HorizontalAlignment="Left" Margin="157,69,0,0" VerticalAlignment="Top" Width="60" Click="Add_Click"/>
+
+    </Grid>
+</Window>

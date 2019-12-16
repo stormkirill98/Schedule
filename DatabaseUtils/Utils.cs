@@ -193,6 +193,46 @@ namespace Database
             return rows.Count == 0 ? null : rows[0];
         }
 
+        public static bool SaveTeacher(Teacher teacher)
+        {
+            OleDbCommand cmd = new OleDbCommand("INSERT INTO Teacher ([FirstName], [Patronymic], [LastName], [Cathedra]) VALUES (@FirstName, @Patronymic, @LastName, @Cathedra)", connection);
+
+            cmd.Parameters.AddWithValue("@FirstName", teacher.FirstName);
+            cmd.Parameters.AddWithValue("@Patronymic", teacher.Patronymic);
+            cmd.Parameters.AddWithValue("@LastName", teacher.LastName);
+            cmd.Parameters.AddWithValue("@Cathedra", teacher.Cathedra);
+
+            connection.Open();
+            int countRows = cmd.ExecuteNonQuery();
+            connection.Close();
+
+            return countRows > 0;
+        }
+
+        public static bool SaveDiscipline(Discipline discipline)
+        {
+            OleDbCommand cmd = new OleDbCommand("INSERT INTO Discipline ([Discipline]) VALUES (@Discipline)", connection);
+            cmd.Parameters.AddWithValue("@Discipline", discipline.Name);
+
+            connection.Open();
+            int countRows = cmd.ExecuteNonQuery();
+            connection.Close();
+
+            return countRows > 0;
+        }
+
+        public static bool SaveStudyGroup(StudyGroup studyGroup)
+        {
+            OleDbCommand cmd = new OleDbCommand("INSERT INTO StudyGroup ([Group]) VALUES (@Group)", connection);
+            cmd.Parameters.AddWithValue("@Group", studyGroup.Name);
+
+            connection.Open();
+            int countRows = cmd.ExecuteNonQuery();
+            connection.Close();
+
+            return countRows > 0;
+        }
+
         public static void SaveWeekSchedule(WeekSchedule weekSchedule)
         {
             for (int dayNumber = 0; dayNumber < weekSchedule.DaySchedules.Count; dayNumber++)
@@ -211,8 +251,15 @@ namespace Database
                                             lessonInfo.Cabinet.Id, lessonInfo.Teacher.Id);
                     } else
                     {
-                        UpdateScheduleRow(lessonInfo.Id, lessonInfo.Discipline.Id, lessonInfo.DisciplineType.Id,
-                                            lessonInfo.Cabinet.Id, lessonInfo.Teacher.Id);
+                        if (lessonInfo.Remove)
+                        {
+                            DeleteScheduleRow(lessonInfo.Id);
+                        }
+                        else
+                        {
+                            UpdateScheduleRow(lessonInfo.Id, lessonInfo.Discipline.Id, lessonInfo.DisciplineType.Id,
+                                                lessonInfo.Cabinet.Id, lessonInfo.Teacher.Id);
+                        }
                     }
                 }
             }
@@ -248,7 +295,7 @@ namespace Database
         private static void UpdateScheduleRow(int scheduleId, int disciplineId,
                                             int disciplineTypeId, int cabinetId, int teacherId)
         {
-            OleDbDataAdapter adapter = new OleDbDataAdapter(string.Format("SELECT * FROM Schedule WHERE ScheduleID = {0}", scheduleId), connection);
+            OleDbDataAdapter adapter = new OleDbDataAdapter($"SELECT * FROM Schedule WHERE ScheduleID = {scheduleId}", connection);
             OleDbCommandBuilder builder = new OleDbCommandBuilder(adapter);
 
             DataSet dataSet = new DataSet();
@@ -280,12 +327,15 @@ namespace Database
             keys[0] = dataSet.Tables["Schedule"].Columns["ScheduleID"];
             dataSet.Tables["Schedule"].PrimaryKey = keys;
 
-            DataRow findRow = dataSet.Tables["Customers"].Rows.Find(scheduleId);
+            DataRow findRow = dataSet.Tables["Schedule"].Rows.Find(scheduleId);
 
             if (findRow != null)
             {
                 findRow.Delete();
             }
+
+            builder.GetUpdateCommand();
+            adapter.Update(dataSet, "Schedule");
         }
     }
 }

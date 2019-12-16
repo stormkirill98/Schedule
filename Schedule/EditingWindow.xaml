@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Schedule"
         xmlns:Database="clr-namespace:Database;assembly=DatabaseUtils" xmlns:Database1="clr-namespace:Database;assembly=Database" x:Class="Schedule.EditingWindow"
         mc:Ignorable="d"
-        Title="Editing Window" Height="500" Width="1505" ResizeMode="NoResize">
+        Title="Schedule" Height="500" Width="1510" ResizeMode="NoResize">
     <Grid VerticalAlignment="Top" Height="460">
         <Label Content="Учебная группа" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25" Width="100"/>
         <ComboBox x:Name="StudyGroupComboBox" HorizontalAlignment="Left" Height="25" 
@@ -26,7 +26,8 @@
         <GridSplitter HorizontalAlignment="Left" Height="380" Margin="989,38,0,0" VerticalAlignment="Top" Width="1" Background="#FFA0A0A0"/>
         <GridSplitter HorizontalAlignment="Left" Height="380" Margin="1234,38,0,0" VerticalAlignment="Top" Width="1" Background="#FFA0A0A0"/>
         <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Height="25" Margin="1410,425,0,0" VerticalAlignment="Top" Width="70" Click="Save_Click"/>
-        <Button x:Name="AddStudyGroup" Content="Добавить группу" HorizontalAlignment="Left" Margin="1207,10,0,0" VerticalAlignment="Top" Width="108" Click="AddStudyGroup_Click"/>
-        <Button x:Name="AddTeacher" Content="Добавить преподавателя" HorizontalAlignment="Left" Margin="1320,10,0,0" VerticalAlignment="Top" Width="160" Click="AddTeacher_Click"/>
+        <Button x:Name="AddStudyGroup" Content="Добавить группу" HorizontalAlignment="Left" Margin="1070,10,0,0" VerticalAlignment="Top" Width="108" Click="AddStudyGroup_Click"/>
+        <Button x:Name="AddTeacher" Content="Добавить преподавателя" HorizontalAlignment="Left" Margin="1183,10,0,0" VerticalAlignment="Top" Width="160" Click="AddTeacher_Click"/>
+        <Button x:Name="AddDiscipline" Content="Добавить дисциплину" HorizontalAlignment="Left" Margin="1347,10,0,0" VerticalAlignment="Top" Width="142" Click="AddDiscipline_Click"/>
     </Grid>
 </Window>

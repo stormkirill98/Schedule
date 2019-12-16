@@ -68,8 +68,11 @@ namespace Schedule
             if (lessonInfo.Lesson.Id == 0)
             {
                 Clear();
+                Hide();
                 return;
             }
+
+            Show();
 
             DisciplineInput.SelectedValue = lessonInfo.Discipline;
             DisciplineTypeInput.SelectedValue = lessonInfo.DisciplineType;
@@ -77,8 +80,21 @@ namespace Schedule
             TeacherInput.SelectedValue = lessonInfo.Teacher;
         }
 
+        private void Hide()
+        {
+            EmptyCheckbox.IsChecked = false;
+            SetVisible(Visibility.Hidden);
+        }
+
+        private void Show()
+        {
+            EmptyCheckbox.IsChecked = true;
+            SetVisible(Visibility.Visible);
+        }
+
         public void Clear()
         {
+            currentLessonInfo = null;
             DisciplineInput.SelectedValue = 0;
             DisciplineTypeInput.SelectedValue = 0;
             CabinetInput.SelectedValue = -1;
@@ -87,6 +103,14 @@ namespace Schedule
 
         public LessonInfo GetLessonInfo()
         {
+            bool isNotEmpty = GetEmptyCheckboxValue();
+
+            if (currentLessonInfo != null && !isNotEmpty && currentLessonInfo.Id != 0)
+            {
+                currentLessonInfo.Remove = true;
+                return currentLessonInfo;
+            }
+
             if (DisciplineInput.SelectedValue == null 
                 || DisciplineTypeInput.SelectedValue == null 
                 || CabinetInput.SelectedValue == null 
@@ -100,15 +124,12 @@ namespace Schedule
             Cabinet cabinetValue = (Cabinet)CabinetInput.SelectedValue;
             Teacher teacherValue = (Teacher)TeacherInput.SelectedValue;
 
-            bool isNotEmpty = EmptyCheckbox.IsChecked == null ? false : (bool)EmptyCheckbox.IsChecked;
 
             if (disciplineValue.Name == ""
                 || disciplineTypeValue.Type == ""
                 || cabinetValue.Number == 0
-                || teacherValue.FullName == "  "
-                || !isNotEmpty)
+                || teacherValue.FullName == "  ")
             {
-                // TODO if one of all is empty then make all empty
                 return null;
             }
 
@@ -121,14 +142,23 @@ namespace Schedule
 
         private void EmptyCheckbox_Click(object sender, RoutedEventArgs e)
         {
-            bool isNotEmpty = EmptyCheckbox.IsChecked == null ? false : (bool)EmptyCheckbox.IsChecked;
+            bool isEmpty = GetEmptyCheckboxValue();
 
-            Visibility visibility = isNotEmpty ? Visibility.Visible : Visibility.Hidden;
+            Visibility visibility = isEmpty ? Visibility.Visible : Visibility.Hidden;
+            SetVisible(visibility);
+        }
 
+        private void SetVisible(Visibility visibility)
+        {
             DisciplineInput.Visibility = visibility;
             DisciplineTypeInput.Visibility = visibility;
             CabinetInput.Visibility = visibility;
             TeacherInput.Visibility = visibility;
+        }
+
+        private bool GetEmptyCheckboxValue()
+        {
+            return EmptyCheckbox.IsChecked == null ? false : (bool)EmptyCheckbox.IsChecked;
         }
     }
 }

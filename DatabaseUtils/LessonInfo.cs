@@ -15,6 +15,7 @@ namespace Database
         public Cabinet Cabinet { get; set; }
         public Teacher Teacher { get; set; }
         public StudyGroup StudyGroup { get; set; }
+        public bool Remove { get; set; } = false;
 
         public LessonInfo() { }
 

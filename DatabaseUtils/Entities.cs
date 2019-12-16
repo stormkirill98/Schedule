@@ -33,6 +33,11 @@ namespace Database
             Id = (int)row["Key"];
             Name = (string)row["Group"];
         }
+
+        public StudyGroup(string name) : this()
+        {
+            Name = name;
+        }
     }
 
     public struct Discipline : HasId
@@ -44,6 +49,11 @@ namespace Database
         {
             Id = (int)row["Key"];
             Name = (string)row["Discipline"];
+        }
+
+        public Discipline(string name) : this()
+        {
+            Name = name;
         }
     }
 
@@ -94,6 +104,18 @@ namespace Database
             Patronymic = (string)row["Patronymic"];
             LastName = (string)row["LastName"];
             Cathedra = (string)row["Cathedra"];
+
+            FullName = string.Format("{0} {1} {2}", LastName, FirstName, Patronymic);
+        }
+
+        public Teacher(string firstName, string patronymic, string lastName, string cathedra)
+        {
+            Id = 0;
+
+            FirstName = firstName;
+            Patronymic = patronymic;
+            LastName = lastName;
+            Cathedra = cathedra;
 
             FullName = string.Format("{0} {1} {2}", LastName, FirstName, Patronymic);
         }

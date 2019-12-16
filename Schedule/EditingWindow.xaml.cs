@@ -28,7 +28,6 @@ namespace Schedule
         {
             InitializeComponent();
 
-            // TODO when is better
             Init();
 
             StudyGroupComboBox.ItemsSource = StudyGroupList;
@@ -108,16 +107,29 @@ namespace Schedule
                 return;
 
             Utils.SaveWeekSchedule(weekSchedule);
+
+            FillWeekSchedule();
         }
 
         private void AddTeacher_Click(object sender, RoutedEventArgs e)
         {
-
+            TeacherWindow teacherWindow = new TeacherWindow();
+            bool result = (bool)teacherWindow.ShowDialog();
+            if (result) Init();
         }
 
         private void AddStudyGroup_Click(object sender, RoutedEventArgs e)
         {
+            StudyGroupWindow studyGroupWindow = new StudyGroupWindow();
+            bool result = (bool)studyGroupWindow.ShowDialog();
+            if (result) StudyGroupList.AddRange(Utils.readStudyGroups());
+        }
 
+        private void AddDiscipline_Click(object sender, RoutedEventArgs e)
+        {
+            DisciplineWindow disciplineWindow = new DisciplineWindow();
+            bool result = (bool)disciplineWindow.ShowDialog();
+            if (result) Init();
         }
 
         private Parity GetParity()
